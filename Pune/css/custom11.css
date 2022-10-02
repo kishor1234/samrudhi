@@ -1,0 +1,378 @@
+/* Add here all your CSS customizations */
+.registeration {
+    float: right;
+    position: relative;
+    top: -46px;
+}
+.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+.cambridgelogos {
+    float: left;
+    width: 50%;
+    position: relative;
+    left: 27%;
+}
+.leadlogo {
+    position: absolute;
+    width: 20%;
+    top: 10px;
+}   
+.imgplace img {
+    width: 47%;
+    margin-bottom: 10px;
+    margin-right: 6px;
+} 
+.modal-dialog {
+    width: 40% !important;
+}  
+      /*!
+// CSS only Responsive Tables
+// http://dbushell.com/2016/03/04/css-only-responsive-tables/
+// by David Bushell
+*/
+.rtable {
+  /*!
+  // IE needs inline-block to position scrolling shadows otherwise use:
+  // display: block;
+  // max-width: min-content;
+  */
+  /*display: inline-block;*/
+  vertical-align: top;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rtable,
+.rtable--flip tbody {
+  -webkit-overflow-scrolling: touch;
+  background: radial-gradient(left, ellipse, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 0 center, radial-gradient(right, ellipse, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 100% center;
+  background-size: 10px 100%, 10px 100%;
+  background-attachment: scroll, scroll;
+  background-repeat: no-repeat;width: 100%;
+}
+
+.rtable td:first-child,
+.rtable--flip tbody tr:first-child {
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(50%, white), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(to right, white 50%, rgba(255, 255, 255, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 20px 100%;
+}
+
+.rtable td:last-child,
+.rtable--flip tbody tr:last-child {
+  background-image: -webkit-gradient(linear, right top, left top, color-stop(50%, white), to(rgba(255, 255, 255, 0)));
+  background-image: linear-gradient(to left, white 50%, rgba(255, 255, 255, 0) 100%);
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: 20px 100%;
+}
+
+.rtable th {
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    background: #f75c28;
+    color: #fff;
+}
+
+.rtable th, .rtable td {
+    padding: 5px 5px;
+    border: 1px solid #ada7a5;
+    font-size: 14px;
+    text-align: center;
+    line-height: 24px;    font-weight: 600;
+
+}
+.rtable span {
+    display: block;
+    color: #f53938;
+}
+.cambridgelogo {
+    padding-top: 7px;
+    text-align: center;
+    margin: 0 auto;
+    width: 44%;
+    margin: 0 auto;
+}
+.rtable--flip {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  background: none;
+}
+
+.rtable--flip thead {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  min-width: -webkit-min-content;
+  min-width: -moz-min-content;
+  min-width: min-content;
+}
+
+.rtable--flip tbody {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.rtable--flip tr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-width: -webkit-min-content;
+  min-width: -moz-min-content;
+  min-width: min-content;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.rtable--flip td,
+.rtable--flip th {
+  display: block;
+}
+
+.rtable--flip td {
+  background-image: none !important;
+  border-left: 0;
+}
+
+.rtable--flip th:not(:last-child),
+.rtable--flip td:not(:last-child) {
+  border-bottom: 0;
+}
+
+/*!
+// CodePen house keeping
+*/
+
+@media only screen and (max-width: 991px){
+  .modal-dialog {
+    width: 90% !important;
+    margin-top: 46px !important;
+}
+}
+/*responsive css */
+@media only screen and (max-width:800px){
+	.leadlogo {
+    position: absolute;
+    width: 20%;
+    top: 70px;
+    left: 16px;
+}
+.registeration {
+    float: right;
+    position: relative;
+    top: 40px;
+}
+}
+@media only screen and (max-width:767px){
+	.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+.cambridgelogos {
+    float: left;
+    width: 50%;
+    position: relative;
+    left: 27%;
+}
+}
+@media only screen and (max-width:570px){
+	.leadlogo {
+    position: absolute;
+    width: 24%;
+    top: 76px;
+    left: 16px;
+}
+.b-logo {
+    display: inherit !important;
+}
+}
+@media only screen and (max-width:480px){
+	.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+.cambridgelogos {
+    float: left;
+    width: 50%;
+    position: relative;
+    left: 27%;
+}
+
+.color-theme {
+    width: 65% !important;
+}
+}
+@media only screen and (max-width:350px){
+	.leadlogo {
+    position: absolute;
+    width: 24%;
+    top: 145px;
+    left: 16px;
+}
+
+}
+
+@media only screen and (max-width:480px){
+  .minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+.cambridgelogos {
+    float: left;
+    width: 50%;
+    position: relative;
+    left: 50%;
+    margin-top: 15px;
+    top: -83px;
+}
+}
+@media only screen and (min-width: 1021px) and (max-width:1199px){
+ .cambridgelogos {
+    float: left;
+    width: 42%;
+    position: relative;
+    left: 14%;
+    margin-top: 37px;
+}
+.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+}
+@media only screen and (min-width: 769px) and (max-width:1017px){
+ .cambridgelogos {
+    float: left;
+    width: 60%;
+    position: relative;
+    left: 0%;
+    margin-top: 43px;
+}
+.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+}
+@media only screen and (min-width: 541px) and (max-width:767px){
+ .cambridgelogos {
+    float: left;
+    width: 85%;
+    position: relative;
+    left: 0;
+    margin-top: 24px;
+}
+.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+}
+@media only screen and (min-width: 481px) and (max-width:540px){
+  .cambridgelogos {
+    float: left;
+    width: 100%;
+    position: relative;
+    left: 0;
+    margin-top: 27px;
+}
+.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+}
+@media only screen and (min-width: 421px) and (max-width:480px){
+  .minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+.cambridgelogos {
+    float: left;
+    width: 50%;
+    position: relative;
+    left: 50%;
+    margin-top: 15px;
+    top: -83px;
+}
+}
+@media only screen and (min-width: 320px) and (max-width:420px){
+	.minlogo {
+    width: 20% !important;
+    margin-right: 18px;
+}
+.cambridgelogos {
+    float: left;
+    width: 72%;
+    position: relative;
+    left: 0%;
+    margin-top: 15px;top: -5px;
+}
+}
+
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 28%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	/*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "Activities"; }
+	td:nth-of-type(2):before { content: "Days"; }
+	td:nth-of-type(3):before { content: "Age Group"; }
+	td:nth-of-type(4):before { content: "Timing"; }
+	
+}

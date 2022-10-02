@@ -1,0 +1,7 @@
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^web\.cns\.ac\.in$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.web\.cns\.ac\.in$
+RewriteRule ^/?$ "125\.99\.105\.30" [R=301,L]
+
