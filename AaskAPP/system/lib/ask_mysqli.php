@@ -49,7 +49,7 @@ class ask_mysqli extends _configuration {
     }
 
     function checkMysqliConnectinError($connection) {
-        if (mysqli_connect_errno($connection)) {
+        if (mysqli_connect_errno()) {
             throw new Exception(mysqli_connect_error());
         }
         return true;
