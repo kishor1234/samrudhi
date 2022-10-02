@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <meta charset="utf-8">
         <!--        <meta name="viewport" content="width=device-width, initial-scale=1">
                 <meta http-equiv="X-UA-Compatible" content="IE=edge" />-->
-        <title>RajLaxmi Result Panel</title>
+        <title>Sarudhi Result Panel</title>
         <link href="/assets/ap/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
         <style>
             .logo-img {
@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-lg-12">
                     <p>
                         <img src="rjlx.png" alt="log-img" class="logo-img"/>
-                        <span style="text-align:center;font-size:30px;"><strong>RajLaxmi Lottery Result Panel</strong></span>
+                        <span style="text-align:center;font-size:30px;"><strong>Samrudhi Lottery Result Panel</strong></span>
                     </p>
                 </div>
                 <div class="col-lg-12">

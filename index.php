@@ -11,12 +11,12 @@ if (!isset($_SESSION["cart"])) {
 }
 //$_SESSION["msg"]="work";
 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-define("domain", "http://omlotto.com/");
-define("game","http://omlotto.com/");
+define("domain", "http://samruddhilottery.in/");
+define("game","http://samruddhilottery.in//");
 define("company", "omlotto");
 //define("api_url", "http://api.omlotto.com");
-define("api_url", "http://api.newloto.lcl");
-define("noreplayid", "no-replay@omlotto.com");
+define("api_url", "http://api.samruddhilottery.in");
+define("noreplayid", "no-replay@samruddhilottery.in");
 /*
  * ---------------------------------------------------------------
  * ERROR REPORTING
