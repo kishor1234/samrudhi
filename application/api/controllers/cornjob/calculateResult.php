@@ -169,7 +169,7 @@ class calculateResult extends CAaskController {
                 $_POST["dload"] = $point;
                 echo "Total Points: " . $point . "<br>";
                 echo "Total Amount: " . $point * 2 . "<br>";
-                $per = ((float) (($point * 2) * $this->per) / 100);
+                $per = (float) $this->per;
                 echo "Per " . $this->per . "% " . $per . "<br>";
                 $_POST["80per"] = $per;
                 echo "<br>winrate {$this->wrate}<br>";
