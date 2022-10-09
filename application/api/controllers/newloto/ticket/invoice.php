@@ -23,7 +23,8 @@ class invoice extends CAaskController {
     public $data = array();
 
     public function __construct() {
-        parent::__construct();
+        //parent::__construct();
+        echo "test";
     }
 
     public function create() {
