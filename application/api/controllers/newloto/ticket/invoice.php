@@ -148,7 +148,7 @@ class invoice extends CAaskController {
                     //$unicid = uniqid();
                     $insertSingleInvoice = array(
                         "own" => $jsonData["main"]["userid"],
-                        "game" => $unicid,
+                        "game" => "",
                         "point" => json_encode($jsonData["data"]),
                         "amount" => $jsonData["main"]["totalamt"],
                         "enterydate" => date("Y-m-d"),
