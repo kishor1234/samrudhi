@@ -48,160 +48,160 @@ class invoice extends CAaskController {
         $jsonData = json_decode($postdata, true);
 
 
-        //print_r($jsonData);die;
-        $sql = $this->ask_mysqli->select("enduser", $_SESSION["db_1"]) . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"]));
-        $result = $this->adminDB[$_SESSION["db_1"]]->query($sql);
-        if ($row = $result->fetch_assoc()) {
-            if (strcmp($jsonData["main"]["advance"], "true") == 0) {
+        print_r($jsonData);die;
+        // $sql = $this->ask_mysqli->select("enduser", $_SESSION["db_1"]) . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"]));
+        // $result = $this->adminDB[$_SESSION["db_1"]]->query($sql);
+        // if ($row = $result->fetch_assoc()) {
+        //     if (strcmp($jsonData["main"]["advance"], "true") == 0) {
 
-                if ($row["balance"] >= $jsonData["main"]["adtotalamt"]) {
+        //         if ($row["balance"] >= $jsonData["main"]["adtotalamt"]) {
 
-                    $limit = 0;
-                    $finalArray = array();
-                    $temp = array();
-                    $qty = 0;
-                    $t = 0;
-                    $error = array();
-                    $this->adminDB[$_SESSION["db_1"]]->autocommit(FALSE);
-                    //calculat princiapl amount removing discount
-                    $discountAmount = (float) ($jsonData["main"]["adtotalamt"] * $row["comission"]);
-                    $principal_amount = (float) ($jsonData["main"]["adtotalamt"] - $discountAmount);
-                    $s = $this->ask_mysqli->_updateINC(array("balance" => "balance-" . $principal_amount), "enduser") . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"]));
-                    $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                    //transaction
-                    $sql = $this->ask_mysqli->insert("transaction", array("userid" => $jsonData["main"]["userid"], "debit" => $principal_amount, "remark" => "Buy Ticket at PT {$principal_amount}", "ip" => $_SERVER["REMOTE_ADDR"], "balance" => $this->getData($this->ask_mysqli->select("enduser", $_SESSION["db_1"]) . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"])), "balance")));
-                    $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB["db_1"]->error) : true;
-                    //end transaction
-                    $sql = $this->ask_mysqli->insert("usertranscation", array("drawid" => $jsonData["main"]["drawid"], "enterydate" => date("Y-m-d"), "gid" => 1, "userid" => $jsonData["main"]["userid"], "netamt" => $jsonData["main"]["adtotalamt"], "discount" => $row["comission"], "discountamt" => $discountAmount, "total" => $principal_amount, "ip" => $_SERVER["REMOTE_ADDR"]));
-                    $this->adminDB[$_SESSION["db_1"]]->query($sql) != 1 ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                    $transaction_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
-                    $unilast = 9536254 + $transaction_id;
-                    $s = $this->ask_mysqli->update(array("trno" => $unilast, "invoiceno" => $unilast), "usertranscation") . $this->ask_mysqli->whereSingle(array("id" => $transaction_id));
-                    $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //             $limit = 0;
+        //             $finalArray = array();
+        //             $temp = array();
+        //             $qty = 0;
+        //             $t = 0;
+        //             $error = array();
+        //             $this->adminDB[$_SESSION["db_1"]]->autocommit(FALSE);
+        //             //calculat princiapl amount removing discount
+        //             $discountAmount = (float) ($jsonData["main"]["adtotalamt"] * $row["comission"]);
+        //             $principal_amount = (float) ($jsonData["main"]["adtotalamt"] - $discountAmount);
+        //             $s = $this->ask_mysqli->_updateINC(array("balance" => "balance-" . $principal_amount), "enduser") . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"]));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //             //transaction
+        //             $sql = $this->ask_mysqli->insert("transaction", array("userid" => $jsonData["main"]["userid"], "debit" => $principal_amount, "remark" => "Buy Ticket at PT {$principal_amount}", "ip" => $_SERVER["REMOTE_ADDR"], "balance" => $this->getData($this->ask_mysqli->select("enduser", $_SESSION["db_1"]) . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"])), "balance")));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB["db_1"]->error) : true;
+        //             //end transaction
+        //             $sql = $this->ask_mysqli->insert("usertranscation", array("drawid" => $jsonData["main"]["drawid"], "enterydate" => date("Y-m-d"), "gid" => 1, "userid" => $jsonData["main"]["userid"], "netamt" => $jsonData["main"]["adtotalamt"], "discount" => $row["comission"], "discountamt" => $discountAmount, "total" => $principal_amount, "ip" => $_SERVER["REMOTE_ADDR"]));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($sql) != 1 ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //             $transaction_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
+        //             $unilast = 9536254 + $transaction_id;
+        //             $s = $this->ask_mysqli->update(array("trno" => $unilast, "invoiceno" => $unilast), "usertranscation") . $this->ask_mysqli->whereSingle(array("id" => $transaction_id));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
 
-                    foreach ($jsonData as $key => $val) {
-                        if (strcmp($key, "main") != 0) {
-                            $perPoint = $val["basic"]["perPoint"];
-                            //add singel invoice here
+        //             foreach ($jsonData as $key => $val) {
+        //                 if (strcmp($key, "main") != 0) {
+        //                     $perPoint = $val["basic"]["perPoint"];
+        //                     //add singel invoice here
 
-                            $unicid = $this->randString(2) . $transaction_id; //. $this->randString(2)
-                            $insertSingleInvoice = array(
-                                "utrno" => $unilast,
-                                "own" => $val["basic"]["userid"],
-                                "game" => $unicid,
-                                "point" => json_encode($val["data"]),
-                                "amount" => $val["basic"]["totalamt"],
-                                "enterydate" => date("Y-m-d"),
-                                "comission" => $row["comission"],
-                                "comissionAMT" => $discountAmount,
-                                "totalpoint" => $val["basic"]["totalqty"],
-                                "enterydate" => (string) date("Y-m-d"),
-                                "winstatus" => (string) 0,
-                                "winamt" => (string) 0,
-                                "claimstatus" => (string) 0,
-                                "ip" => $val["basic"]["ip"],
-                                "gametime" => $val["basic"]["start"],
-                                "gameendtime" => $val["basic"]["end"],
-                                "gametimeid" => $val["basic"]["drawid"]
-                            );
+        //                     $unicid = $this->randString(2) . $transaction_id; //. $this->randString(2)
+        //                     $insertSingleInvoice = array(
+        //                         "utrno" => $unilast,
+        //                         "own" => $val["basic"]["userid"],
+        //                         "game" => $unicid,
+        //                         "point" => json_encode($val["data"]),
+        //                         "amount" => $val["basic"]["totalamt"],
+        //                         "enterydate" => date("Y-m-d"),
+        //                         "comission" => $row["comission"],
+        //                         "comissionAMT" => $discountAmount,
+        //                         "totalpoint" => $val["basic"]["totalqty"],
+        //                         "enterydate" => (string) date("Y-m-d"),
+        //                         "winstatus" => (string) 0,
+        //                         "winamt" => (string) 0,
+        //                         "claimstatus" => (string) 0,
+        //                         "ip" => $val["basic"]["ip"],
+        //                         "gametime" => $val["basic"]["start"],
+        //                         "gameendtime" => $val["basic"]["end"],
+        //                         "gametimeid" => $val["basic"]["drawid"]
+        //                     );
 
-                            //insert main ticket using $transaction_id 
-                            //$insertSingleInvoice["utrno"] = $last;
-                            $sql = $this->ask_mysqli->insert("entry", $insertSingleInvoice);
-                            $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                            $last_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
+        //                     //insert main ticket using $transaction_id 
+        //                     //$insertSingleInvoice["utrno"] = $last;
+        //                     $sql = $this->ask_mysqli->insert("entry", $insertSingleInvoice);
+        //                     $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //                     $last_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
 
-                            $last = 152671 + $last_id;
-                            $s = $this->ask_mysqli->update(array("trno" => $last), "entry") . $this->ask_mysqli->whereSingle(array("id" => $last_id));
-                            $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                            array_push($finalArray, $this->splitPrintDataAdvance($last_id, $error));
-                        }
-                    }
-                    //die;
-                    //print_r($insertSingleInvoice);
-                    if (empty($error)) {
-                        //$this->splitPrintData($last_id);
-                        $this->adminDB[$_SESSION["db_1"]]->commit();
-                        //$this->adminDB[$_SESSION["db_1"]]->rollback();
-                        echo json_encode(array("trno" => $unilast, "status" => "1", "msg" => "Success", "advance" => "true", "print" => (string) $unilast));
-                    } else {
-                        $this->adminDB[$_SESSION["db_1"]]->rollback();
-                        echo json_encode(array("status" => "0", "msg" => "Invalid User", "print" => $error));
-                    }
-                } else {
-                    echo json_encode(array("status" => "0", "msg" => "Insuficent Balance", "print" => $error));
-                }
-            } else {
+        //                     $last = 152671 + $last_id;
+        //                     $s = $this->ask_mysqli->update(array("trno" => $last), "entry") . $this->ask_mysqli->whereSingle(array("id" => $last_id));
+        //                     $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //                     array_push($finalArray, $this->splitPrintDataAdvance($last_id, $error));
+        //                 }
+        //             }
+        //             //die;
+        //             //print_r($insertSingleInvoice);
+        //             if (empty($error)) {
+        //                 //$this->splitPrintData($last_id);
+        //                 $this->adminDB[$_SESSION["db_1"]]->commit();
+        //                 //$this->adminDB[$_SESSION["db_1"]]->rollback();
+        //                 echo json_encode(array("trno" => $unilast, "status" => "1", "msg" => "Success", "advance" => "true", "print" => (string) $unilast));
+        //             } else {
+        //                 $this->adminDB[$_SESSION["db_1"]]->rollback();
+        //                 echo json_encode(array("status" => "0", "msg" => "Invalid User", "print" => $error));
+        //             }
+        //         } else {
+        //             echo json_encode(array("status" => "0", "msg" => "Insuficent Balance", "print" => $error));
+        //         }
+        //     } else {
 
 
-                if ($row["balance"] >= $jsonData["main"]["totalamt"]) {
-                    $limit = 0;
-                    $finalArray = array();
-                    $temp = array();
-                    $qty = 0;
-                    $t = 0;
-                    $error = array();
-                    $perPoint = $jsonData["main"]["perPoint"];
-                    $this->adminDB[$_SESSION["db_1"]]->autocommit(FALSE);
-                    //add singel invoice here
-                    $discountAmount = (float) ($jsonData["main"]["totalamt"] * $row["comission"]);
-                    //$unicid = uniqid();
-                    $insertSingleInvoice = array(
-                        "own" => $jsonData["main"]["userid"],
-                        "game" => "",
-                        "point" => json_encode($jsonData["data"]),
-                        "amount" => $jsonData["main"]["totalamt"],
-                        "enterydate" => date("Y-m-d"),
-                        "comission" => $row["comission"],
-                        "comissionAMT" => $discountAmount,
-                        "totalpoint" => $jsonData["main"]["totalqty"],
-                        "enterydate" => (string) date("Y-m-d"),
-                        "winstatus" => (string) 0,
-                        "winamt" => (string) 0,
-                        "claimstatus" => (string) 0,
-                        "ip" => $jsonData["main"]["ip"],
-                        "gametime" => $jsonData["main"]["start"],
-                        "gameendtime" => $jsonData["main"]["end"],
-                        "gametimeid" => $jsonData["main"]["drawid"]
-                    );
-                    //calculat princiapl amount removing discount
-                    $principal_amount = (float) ($jsonData["main"]["totalamt"] - $discountAmount);
-                    $s = $this->ask_mysqli->_updateINC(array("balance" => "balance-" . $principal_amount), "enduser") . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"]));
-                    $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                    //transaction
-                    $sql = $this->ask_mysqli->insert("transaction", array("userid" => $jsonData["main"]["userid"], "debit" => $principal_amount, "remark" => "Buy Ticket at PT {$principal_amount}", "ip" => $_SERVER["REMOTE_ADDR"], "balance" => $this->getData($this->ask_mysqli->select("enduser", $_SESSION["db_1"]) . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"])), "balance")));
-                    $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB["db_1"]->error) : true;
-                    //end transaction
-                    $sql = $this->ask_mysqli->insert("usertranscation", array("drawid" => $jsonData["main"]["drawid"], "enterydate" => date("Y-m-d"), "gid" => 1, "drawid" => $insertSingleInvoice["gametimeid"], "userid" => $insertSingleInvoice["own"], "invoiceno" => $insertSingleInvoice["game"], "netamt" => $insertSingleInvoice["amount"], "discount" => $insertSingleInvoice["comission"], "discountamt" => $insertSingleInvoice["comissionAMT"], "total" => $principal_amount, "ip" => $_SERVER["REMOTE_ADDR"]));
-                    $this->adminDB[$_SESSION["db_1"]]->query($sql) != 1 ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                    $transaction_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
-                    $last = 9536254 + $transaction_id;
-                    $unicid = $this->randString(2) . $transaction_id; //. $this->randString(2);
-                    $s = $this->ask_mysqli->update(array("trno" => $last, "invoiceno" => $last), "usertranscation") . $this->ask_mysqli->whereSingle(array("id" => $transaction_id));
-                    $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //         if ($row["balance"] >= $jsonData["main"]["totalamt"]) {
+        //             $limit = 0;
+        //             $finalArray = array();
+        //             $temp = array();
+        //             $qty = 0;
+        //             $t = 0;
+        //             $error = array();
+        //             $perPoint = $jsonData["main"]["perPoint"];
+        //             $this->adminDB[$_SESSION["db_1"]]->autocommit(FALSE);
+        //             //add singel invoice here
+        //             $discountAmount = (float) ($jsonData["main"]["totalamt"] * $row["comission"]);
+        //             //$unicid = uniqid();
+        //             $insertSingleInvoice = array(
+        //                 "own" => $jsonData["main"]["userid"],
+        //                 "game" => "",
+        //                 "point" => json_encode($jsonData["data"]),
+        //                 "amount" => $jsonData["main"]["totalamt"],
+        //                 "enterydate" => date("Y-m-d"),
+        //                 "comission" => $row["comission"],
+        //                 "comissionAMT" => $discountAmount,
+        //                 "totalpoint" => $jsonData["main"]["totalqty"],
+        //                 "enterydate" => (string) date("Y-m-d"),
+        //                 "winstatus" => (string) 0,
+        //                 "winamt" => (string) 0,
+        //                 "claimstatus" => (string) 0,
+        //                 "ip" => $jsonData["main"]["ip"],
+        //                 "gametime" => $jsonData["main"]["start"],
+        //                 "gameendtime" => $jsonData["main"]["end"],
+        //                 "gametimeid" => $jsonData["main"]["drawid"]
+        //             );
+        //             //calculat princiapl amount removing discount
+        //             $principal_amount = (float) ($jsonData["main"]["totalamt"] - $discountAmount);
+        //             $s = $this->ask_mysqli->_updateINC(array("balance" => "balance-" . $principal_amount), "enduser") . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"]));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //             //transaction
+        //             $sql = $this->ask_mysqli->insert("transaction", array("userid" => $jsonData["main"]["userid"], "debit" => $principal_amount, "remark" => "Buy Ticket at PT {$principal_amount}", "ip" => $_SERVER["REMOTE_ADDR"], "balance" => $this->getData($this->ask_mysqli->select("enduser", $_SESSION["db_1"]) . $this->ask_mysqli->whereSingle(array("userid" => $jsonData["main"]["userid"])), "balance")));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB["db_1"]->error) : true;
+        //             //end transaction
+        //             $sql = $this->ask_mysqli->insert("usertranscation", array("drawid" => $jsonData["main"]["drawid"], "enterydate" => date("Y-m-d"), "gid" => 1, "drawid" => $insertSingleInvoice["gametimeid"], "userid" => $insertSingleInvoice["own"], "invoiceno" => $insertSingleInvoice["game"], "netamt" => $insertSingleInvoice["amount"], "discount" => $insertSingleInvoice["comission"], "discountamt" => $insertSingleInvoice["comissionAMT"], "total" => $principal_amount, "ip" => $_SERVER["REMOTE_ADDR"]));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($sql) != 1 ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //             $transaction_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
+        //             $last = 9536254 + $transaction_id;
+        //             $unicid = $this->randString(2) . $transaction_id; //. $this->randString(2);
+        //             $s = $this->ask_mysqli->update(array("trno" => $last, "invoiceno" => $last), "usertranscation") . $this->ask_mysqli->whereSingle(array("id" => $transaction_id));
+        //             $this->adminDB[$_SESSION["db_1"]]->query($s) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
 
-                    //insert main ticket using $transaction_id 
-                    $insertSingleInvoice["utrno"] = $last;
-                    $insertSingleInvoice["game"] = $unicid;
-                    $sql = $this->ask_mysqli->insert("entry", $insertSingleInvoice);
-                    $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
-                    $last_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
-                    //print_r($insertSingleInvoice);
-                    $utrno = $last;
-                    if (empty($error)) {
-                        $this->splitPrintData($last_id, $utrno, $error);
-                        //$this->adminDB[$_SESSION["db_1"]]->commit();
-                    } else {
-                        $this->adminDB[$_SESSION["db_1"]]->rollback();
-                        echo json_encode(array("trno" => (String) $utrno, "status" => "0", "msg" => "Invalid User", "print" => $error));
-                    }
-                } else {
-                    echo json_encode(array("status" => "0", "msg" => "Insuficent Balance", "print" => $error));
-                }
-            }
-        } else {
-            echo json_encode(array("status" => "0", "msg" => "Invalid User", "print" => $error));
-        }
+        //             //insert main ticket using $transaction_id 
+        //             $insertSingleInvoice["utrno"] = $last;
+        //             $insertSingleInvoice["game"] = $unicid;
+        //             $sql = $this->ask_mysqli->insert("entry", $insertSingleInvoice);
+        //             $this->adminDB[$_SESSION["db_1"]]->query($sql) != true ? array_push($error, $this->adminDB[$_SESSION["db_1"]]->error) : true;
+        //             $last_id = $this->adminDB[$_SESSION["db_1"]]->insert_id;
+        //             //print_r($insertSingleInvoice);
+        //             $utrno = $last;
+        //             if (empty($error)) {
+        //                 $this->splitPrintData($last_id, $utrno, $error);
+        //                 //$this->adminDB[$_SESSION["db_1"]]->commit();
+        //             } else {
+        //                 $this->adminDB[$_SESSION["db_1"]]->rollback();
+        //                 echo json_encode(array("trno" => (String) $utrno, "status" => "0", "msg" => "Invalid User", "print" => $error));
+        //             }
+        //         } else {
+        //             echo json_encode(array("status" => "0", "msg" => "Insuficent Balance", "print" => $error));
+        //         }
+        //     }
+        // } else {
+        //     echo json_encode(array("status" => "0", "msg" => "Invalid User", "print" => $error));
+        // }
 
 
         return;
