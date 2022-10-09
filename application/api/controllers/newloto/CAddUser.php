@@ -406,7 +406,7 @@ class CAddUser extends CAaskController {
             $data = $_POST;
             unset($data['action']);
             $where = $this->ask_mysqli->whereSingle(array("id" => $data["id"]));
-            unset($data[["id"]]);
+            unset($data["id"]);
             $error = array();
             $this->adminDB[$_SESSION["db_1"]]->autocommit(false);
             $sql = $this->ask_mysqli->update($data, "enduser") . $where;

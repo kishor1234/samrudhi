@@ -14,7 +14,7 @@ define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'developm
 define("domain", "http://samruddhilottery.in/");
 define("game","http://samruddhilottery.in//");
 define("company", "omlotto");
-//define("api_url", "http://api.omlotto.com");
+// define("api_url", "http://api.yatara.lcl");
 define("api_url", "http://api.samruddhilottery.in");
 define("noreplayid", "no-replay@samruddhilottery.in");
 /*
